@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="crumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="fa fa-home fa-fw"></i>
+			<a href='/osrm/index/'>控制台</a>
+		</li>
+		<li>
+			<a href='/osrm/process/'>应用管理</a>
+		</li>
+		<li>
+			<a href=#>应用详情</a>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<div class="page-title">
+		<h3>应用详情</h3>
+	</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+       <div class="col-md-12">
+           <div class="box widget">
+               <div class="widget-header" >
+                   <h4 >应用基本信息</h4>
+                    <div class="ibox-tools">
+                       <a class="collapse-link">
+                       <i class="fa fa-chevron-down"></i>
+                   	   </a>
+              	 	</div>
+               </div>
+               <div class="widget-content no-padding">
+                   <table class="table table-bordered table-hover table-checkable table-responsive datatable">
+                   <tbody class="tbcenter">
+                        <tr>
+                            <td class="tdcolor">应用名称</td>
+                            <td >{{ process_info.label_cn }}</td>
+                           	<td class="tdcolor">所属主机IP</td>
+                            <td >{{ process_info.related_host_cuid.ipaddr }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tdcolor">应用所属用户</td>
+                            <td >{{ process_info.user_name }}</td>
+                           	<td class="tdcolor">应用所属业务系统</td>
+                            <td >{{ process_info.related_system_cn }}</td>
+                        </tr>
+                      </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+   {% if cur_process_info %}
+   <div class="row">
+       <div class="col-md-12">
+           <div class="box widget">
+               <div class="widget-header" >
+                   <h4 >应用采集信息</h4>
+                    <div class="ibox-tools">
+                       <a class="collapse-link">
+                       <i class="fa fa-chevron-down"></i>
+                   	   </a>
+              	 	</div>
+               </div>
+               <div class="widget-content no-padding">
+                   <table class="table table-bordered table-hover table-checkable table-responsive datatable">
+                   <tbody class="tbcenter">
+                        <tr>
+                            <td class="tdcolor">应用PID</td>
+                            <td >{{ cur_process_info.pid }}</td>
+                           	<td class="tdcolor">应用线程数</td>
+                            <td >{{ cur_process_info.num_threads }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tdcolor">应用使用CPU比例</td>
+                            <td >{{ cur_process_info.cpu_percent }}%</td>
+                           	<td class="tdcolor">应用TCP连接数</td>
+                            <td >{{ cur_process_info.tcp_connections_num }}</td>
+                        </tr>
+                        <tr> 
+                            <td class="tdcolor">应用MEM_RSS</td>
+                            <td >{{ cur_process_info.mem_rss }}</td>
+                           	<td class="tdcolor">应用MEM_VMS</td>
+                            <td >{{ cur_process_info.mem_vms }}</td>
+                        </tr>
+                       	<tr> 
+                            <td class="tdcolor">应用MEM_USS</td>
+                            <td >{{ cur_process_info.mem_uss }}</td>
+                           	<td class="tdcolor">应用MEM_PSS</td>
+                            <td >{{ cur_process_info.mem_pss }}</td>
+                        </tr>
+                      </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+  <div class="footcl"><b>采集时间：{{ cur_process_info.create_time| date:"Y:m:d G:i:s" }}</b></div>
+  {% endif%}
+</div>
+
+<script>
+
+     
+</script>
+
+{% endblock %}

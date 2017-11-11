@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="crumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="fa fa-home fa-fw"></i>
+			<a href='/osrm/index/'>控制台</a>
+		</li>
+		<li>
+			<a href='/osrm/host/'>主机管理</a>
+		</li>
+		<li>
+			<a href=#>修改主机</a>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<div class="page-title">
+		<h3>修改主机</h3>
+	</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="ibox float-e-margins">
+                <div id="ibox-content" class="ibox-title">
+                    <h5> 修改主机基本信息 </h5>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="panel blank-panel">
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="tab-1" class="ibox float-e-margins tab-pane active">
+                                    {% if error %}
+                                        <div class="alert alert-warning text-center">{{ error }}</div>
+                                    {% endif %}
+                                    {% if msg %}
+                                        <div class="alert alert-success text-center">{{ msg }}</div>
+                                    {% endif %}
+
+                                    <form id="assetForm" method="post" class="form-horizontal">
+
+                                        <div class="form-group" id="label_cn">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 主机名称<span class="red-fonts">*</span> </label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="label_cn" class="form-control" value="{{ object_list.label_cn }}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="alias">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 别名</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="alias" class="form-control" value="{{ object_list.alias }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="ipaddr">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> IP地址<span class="red-fonts">*</span> </label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="ipaddr" class="form-control" value="{{ object_list.ipaddr }}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="private_ipaddr">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 内网IP地址</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="private_ipaddr" class="form-control" value="{{ object_list.private_ipaddr }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="os_version">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 操作系统</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="os_version" class="form-control"  value="{{ object_list.os_version }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="vendor">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 厂商 </label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="vendor" class="form-control" value="{{ object_list.vendor }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="related_system_cn">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 所属业务系统 </label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="related_system_cn" class="form-control" value="{{ object_list.related_system_cn }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-2">
+                                                <button class="btn btn-white" type="reset"> 重置 </button>
+                                                <button class="btn btn-primary" type="submit"> 提交 </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var required_fields = ["label_cn", "ipaddr"];
+required_fields.forEach(function(field) {
+    $('label[for="' + field + '"]').parent().addClass("required");
+});
+
+$('#assetForm').validator({
+    timely: 2,
+    theme: "yellow_right_effect",
+    rules: {
+        check_ip: [/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/, 'ip地址不正确'],
+    },
+    fields: {
+        "ipaddr": {
+            rule: "check_ip;",
+            tip: "输入IP",
+            ok: "",
+            msg: {required: "必须填写!"}
+        },
+        "label_cn": {
+            rule: "required;length[0~53]",
+            tip: "填写主机名",
+            ok: "",
+            msg: {required: "必须填写!"}
+        },
+    },
+    valid: function(form) {
+        form.submit();
+    }
+});
+		
+     
+</script>
+
+{% endblock %}

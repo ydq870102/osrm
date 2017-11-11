@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block content %}
+<div class="crumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="fa fa-home fa-fw"></i>
+			<a href='/osrm/index/'>控制台</a>
+		</li>
+		<li>
+			<a href='/osrm/monitor/'>监控管理</a>
+		</li>
+		<li>
+			<a href=#>监控编辑</a>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<div class="page-title">
+		<h3>监控编辑</h3>
+	</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="ibox float-e-margins">
+                <div id="ibox-content" class="ibox-title">
+                    <h5> 填写监控基本信息 </h5>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="panel blank-panel">
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="tab-1" class="ibox float-e-margins tab-pane active">
+                                    {% if error %}
+                                        <div class="alert alert-warning text-center">{{ error }}</div>
+                                    {% endif %}
+                                    {% if msg %}
+                                        <div class="alert alert-success text-center">{{ msg }}</div>
+                                    {% endif %}
+
+                                    <form id="processForm" method="post" class="form-horizontal">
+                                    <div style="display:none" id='cuid' >
+                                    	<input type="text"  name="cuid"  class="form-control" value="{{ object_list.cuid }}" >
+                                    </div>
+
+                                        <div class="form-group" id="label_cn">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 监控对象<span class="red-fonts">*</span> </label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="label_cn" readonly="true" class="form-control" value="{{ object_list.monitor_object|convert_monitor_object }}" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="related_ipaddr">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 所属主机</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="related_ipaddr"  readonly="true" class="form-control" value="{{ object_list.monitor_object|interpret_ip  }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="monitor_type">
+                                            <div class="hr-line-dashed"></div>
+                                            <label class="col-sm-2 control-label"> 监控类型</label>
+                                            <div class="col-sm-8">
+                                                <input type="text"  name="monitor_type"  readonly="true" class="form-control" value="{{ object_list.monitor_type  }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                        	<div class="hr-line-dashed"></div>
+                                			<label for="sudo" class="col-sm-2 control-label">告警级别<span class="red-fonts">*</span> </label>
+                                			<div class="col-sm-8" id="related_host_cuid">
+                                    			<select name="monitor_level" data-placeholder="告警级别" class="chosen-select form-control m-b"  data-live-search="false">
+                                    				 {% for level in ranges %}
+                                    				 {% if level == object_list.monitor_level %}
+                                           			 <option  value="{{ level }}"  selected = "selected" >{{ level }}</option>
+                                           			 {% else%}
+                                           			 <option  value="{{ level }}" >{{ level }}</option>
+                                           			 {% endif %}
+                                           			 {% endfor %}
+                                   				 </select>
+                               			 	</div>
+                            			</div>
+                            			<div class="form-group">
+                                        	<div class="hr-line-dashed"></div>
+                                			<label for="sudo" class="col-sm-2 control-label">告警描述<span class="red-fonts">*</span> </label>
+                                			<div class="col-sm-8" id="related_host_cuid">
+                                    			<select name="monitor_desc" data-placeholder="告警描述" class="chosen-select form-control m-b"  data-live-search="false">
+                                    				 {% for alarm_obj in alarm_desc %}
+                                    				 {% if alarm_obj.monitor_type == object_list.monitor_alarm_type %}
+                                           			 <option  value="{{ alarm_obj.cuid }}" selected = "selected">{{ alarm_obj.monitor_value }}</option>
+                                           			 {% else%}
+                                           			 <option  value="{{ alarm_obj.cuid }}" >{{ alarm_obj.monitor_value }}</option>
+                                           			 {% endif %}
+                                           			 {% endfor %}
+                                   				 </select>
+                               			 	</div>
+                            			</div>
+                                        <div class="form-group">
+                                        <div class="hr-line-dashed"></div>
+                                        <label class="col-sm-2 control-label"> 是否发送MQ <span class="red-fonts"> *</span> </label>
+                                            <div class="col-sm-8">
+                                                <div class="radio i-checks">
+                                                    <label> <input type="radio" value="1" name="is_send">是 </label>
+                                                    <label> <input type="radio" checked="" value="0" name="is_send"> 否</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-2">
+                                                <button class="btn btn-white" type="reset"> 重置 </button>
+                                                <button class="btn btn-primary" type="submit"> 提交 </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+
+</script>
+
+{% endblock %}

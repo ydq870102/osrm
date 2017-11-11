@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="crumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="fa fa-home fa-fw"></i>
+			<a href='/osrm/index/'>控制台</a>
+		</li>
+		<li>
+			<a href='/osrm/host/'>主机管理</a>
+		</li>
+		<li>
+			<a href=#>主机性能</a>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<div class="page-title">
+		<h3>主机性能</h3>
+	</div>
+</div>
+<div class="ibox-content">
+	<div class=button-table"">
+	<div  >
+		<span>主机IP:</span>
+        <select class="chosen-select select-control m-b"  >
+           <option  value="111" selected = "selected" >222</option>
+           <option  value="222" >111</option>
+        </select>
+        	<span>起始时间：</span>
+        	<input class = "select-control" type ="datetime"/>
+        	<span>结束时间:</span>
+            <input class = "select-control" type ="datetime"/>
+            <button>查询</button>
+    </div>
+	</div>
+
+        <div class="col-sm-7" id="top10" style="margin-left: -15px;height: 500px;width:100%;padding: 15px 0 15px 0;"></div>
+</div>>
+
+<script src="/static/js/echarts/echarts.js"></script>
+<script>
+
+require.config({
+    paths: {
+        'echarts': '/static/js/echarts/chart',
+        'echarts/chart/line': '/static/js/echarts/chart/line',
+        'echarts/chart/pie': '/static/js/echarts/chart/pie'
+    }
+});
+require(
+    [
+        'echarts',
+        'echarts/chart/line'
+    ],
+    function (ec) {
+        var top10Chart = ec.init(document.getElementById('top10'));
+        var option = {
+            title : {
+                text: '服务器性能图表',
+                subtext: '汇总时间内存/CPU',
+                x: 'center'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            backgroundColor: '#fff',
+            legend: {
+                data:['CPU', '内存'],
+                y: 'bottom'
+            },
+            toolbox: {
+                show : false,
+                feature : {
+{#                        mark : {show: true},#}
+{#                        dataView : {show: true, readOnly: false},#}
+                    magicType : {show: true, type: ['line', 'bar']}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : [0,1,2,3,4,5,6,7,8,9,10]
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'CPU',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: [2,10,45,21,2,5,21,21,2,5,21]
+                },
+                {
+                    name:'内存',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: [9,12,48,25,2,5,100,21,2,5,21]
+                }
+            ]
+        };;
+
+        top10Chart.setOption(option);
+    }
+);
+
+     
+</script>
+
+{% endblock %}

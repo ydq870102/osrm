@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="crumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="fa fa-home fa-fw"></i>
+			<a href='/osrm/index/'>控制台</a>
+		</li>
+		<li>
+			<a href='/osrm/host/'>主机管理</a>
+		</li>
+		<li>
+			<a href=#>主机详情</a>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<div class="page-title">
+		<h3>主机详情</h3>
+	</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+       <div class="col-md-12">
+           <div class="box widget">
+               <div class="widget-header" >
+                   <h4 >主机基本信息</h4>
+                    <div class="ibox-tools">
+                       <a class="collapse-link">
+                       <i class="fa fa-chevron-down"></i>
+                   	   </a>
+              	 	</div>
+               </div>
+               <div class="widget-content no-padding">
+                   <table class="table table-bordered table-hover table-checkable table-responsive datatable">
+                   <tbody class="tbcenter">
+                        <tr>
+                            <td class="tdcolor">主机名称</td>
+                            <td >{{ host_info.label_cn }}</td>
+                           <td class="tdcolor">主机IP</td>
+                            <td >{{ host_info.ipaddr }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tdcolor">操作系统</td>
+                            <td >{{ host_info.os_version }}</td>
+                           <td class="tdcolor">厂家</td>
+                            <td >{{ host_info.vendor }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tdcolor">内存总量</td>
+                            {% if memory_info %}
+                            <td >{{ memory_info.memory_total }}</td>
+                            {% else %}
+                            <td >None</td>
+                            {% endif %}
+                           <td class="tdcolor">硬盘总量</td>
+                            <td >{{ disk_total }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tdcolor">CPU物理核数</td>
+                            {% if cpu_info %}
+                            <td >{{ cpu_info.physics_cpu_num }}</td>
+                            {% else %}
+                            <td >None</td>
+                            {% endif %}
+                           <td class="tdcolor">CPU逻辑核数</td>
+                           {% if cpu_info %}
+                            <td >{{ cpu_info.logical_cpu_num }}</td>
+                            {% else %}
+                            <td >None</td>
+                            {% endif %}
+                        </tr>
+                        <tr> 
+                            <td class="tdcolor">主机状态</td>
+                            <td >数据库主机1</td>
+                           <td class="tdcolor">代理客户端状态</td>
+                            <td >10.201.34.21</td>
+                        </tr>
+                      </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+  {% if cpu_info and memory_info %}
+  <div class="row">
+      <div class="col-md-12">
+          <div class="widget box">
+              <div class="widget-header" >
+                  <h4 >CPU和内存使用详情</h4>
+                   <div class="ibox-tools">
+                      <a class="collapse-link">
+                      <i class="fa fa-chevron-down"></i>
+                  </a>
+              </div>
+              </div>
+              <div class="widget-content no-padding">
+                  <table class="table  table-bordered table-hover table-checkable table-responsive datatable">
+                  	<tbody class="tbcenter">
+                       <tr>
+                           <td class="tdcolor">CPU_USER</td>
+                           <td>{{ cpu_info.cpu_user }}%</td>
+                           <td class="tdcolor">CPU_SYSTEM</td>
+                           <td>{{ cpu_info.cpu_system }}%</td>
+                       </tr>
+                       <tr>
+                           <td class="tdcolor">CPU_IOWAIT</td>
+                           <td>{{ cpu_info.cpu_iowait }}%</td>
+                           <td class="tdcolor">CPU_IDLE</td>
+                           <td>{{ cpu_info.cpu_idle }}%</td>
+                       </tr>
+                       <tr>
+                           <td class="tdcolor">内存总量</td>
+                           <td>{{ memory_info.memory_total }}</td>
+                           <td class="tdcolor">已使用内存</td>
+                           <td>{{ memory_info.memory_used }}</td>
+                       </tr>
+                       <tr>
+                           <td class="tdcolor">可用有效内存</td>
+                           <td>{{ memory_info.memory_available }}</td>
+                           <td class="tdcolor">内存使用百分比</td>
+                           <td>{{ memory_info.memory_percent }}%</td>
+                       </tr>
+                       <tr>
+                           <td class="tdcolor">SWAP总量</td>
+                           <td>{{ memory_info.swap_total }}</td>
+                           <td class="tdcolor">已使用SWAP</td>
+                           <td>{{ memory_info.swap_used }}</td>
+                       </tr>
+                       <tr>
+                           <td class="tdcolor">可用有效SWAP</td>
+                           <td>{{ memory_info.swap_free }}</td>
+                           <td class="tdcolor">SWAP使用百分比</td>
+                           <td>{{ memory_info.swap_percent }}%</td>
+                       </tr>
+                     </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endif%}
+  {% if disk_info %}
+   <div class="row">
+      <div class="col-md-12">
+          <div class="widget box">
+              <div class="widget-header" >
+                  	<h4 >硬盘使用详情</h4>
+                   	<div class="ibox-tools">
+                      	<a class="collapse-link">
+                      		<i class="fa fa-chevron-down"></i>
+                 		</a>
+              		</div>
+              </div>
+              <div class="widget-content no-padding">
+                  <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                  	<tbody class="tbcenter">
+                       <tr>
+                           <td class="tdcolor">设备名称</td>
+                           <td class="tdcolor">挂载点</td>
+                           <td class="tdcolor">设备容量</td>
+                           <td class="tdcolor">已使用容量</td>
+                           <td class="tdcolor">使用比例</td>
+                       </tr>
+                       {% for disk in disk_info %}
+                       <tr>
+                           <td >{{ disk.device_name }}</td>
+                           <td >{{ disk.mount_point }}</td>
+                           <td >{{ disk.device_total }}</td>
+                           <td >{{ disk.device_used }}</td>
+                           <td >{{ disk.device_percent }}%</td>
+                       </tr>
+                       {% endfor %}
+                     </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="footcl"><b>采集时间：{{ cpu_info.create_time| date:"Y:m:d G:i:s" }}</b></div>
+  {% endif%}
+</div>
+
+<script>
+
+     
+</script>
+
+{% endblock %}

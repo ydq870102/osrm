@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+   		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>自动化运维平台</title>
+    	<link rel="shortcut icon" href="/static/img/facio.ico" type="image/x-icon">
+    	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    	<link href="/static/css/animate.css" rel="stylesheet">
+    	<link href="/static/css/style.css" rel="stylesheet">
+    	<link href="/static/css/main.css" rel="stylesheet">
+    	<script src="/static/js/jquery-2.1.1.js"></script>
+    	<script src="/static/js/validator/jquery.validator.js"></script>
+		<script src="/static/js/validator/zh_CN.js"></script>
+    	<script src="/static/js/bootstrap.min.js"></script>
+    	<script src="/static/js/base.js"></script> 
+		<link rel="stylesheet" href="/static/artDialog/css/ui-dialog.css">
+		<script src="/static/artDialog/dist/dialog-min.js"></script>
+   
+    </head>
+    
+<body class = "breakpoint-1200" style="height:auto" >
+	<header class="header navbar navbar-fixed-top" role ="banner">
+		<div class = "navbar-brand">  自动化运维平台</div>
+	</header>
+	<div id="container" class="fixed-header"> 
+		<div id="sidebar" class="sidebar-fixed">
+			<div style="height:50px"> </div>
+			<ul id="nav">
+				<li class="current">
+					<a href='/osrm/host/'>主机管理</a>
+				</li>
+			</ul>
+			<ul id="nav">
+				<li class="sub-menu">
+					<a href=/osrm/process/>应用管理</a>
+				</li>
+			</ul>
+			<ul id="nav">
+				<li class="sub-menu">
+					<a href='/osrm/database/'>数据库管理</a>
+				</li>
+			</ul>
+			<ul id="nav">
+				<li class="sub-menu">
+					<a href=/osrm/monitor/>监控管理</a>
+				</li>
+			</ul>
+			<ul id="nav">
+				<li class="sub-menu">
+					<a href=/osrm/alarm/>告警管理</a>
+				</li>
+			</ul>
+			<div style="height:50px">
+			</div>
+			<ul id="nav">
+				<li class="sub-menu">
+					<a href=/osrm/logout/>退出登录</a>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div class ="container" background-color="#ffffff">
+            {% block content %}{% endblock %}
+			</div>
+		</div>
+	</div>
+</body>
+
+
+</html>
